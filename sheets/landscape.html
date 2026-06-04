@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kimi Code Cheat Sheet Landscape</title>
+  <style>
+    :root {
+      --ice: #eff9ff;
+      --white: #ffffff;
+      --sky: #81c4ff;
+      --mist: #e1e3e6;
+      --navy: #043153;
+      --black: #000000;
+      --blue: #0a7aff;
+      --gray: #919391;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--ice);
+      color: var(--navy);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }
+
+    .sheet {
+      width: 1600px;
+      height: 1200px;
+      margin: 0 auto;
+      padding: 34px 38px 30px;
+      background: var(--ice);
+      overflow: hidden;
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 28px;
+      padding-bottom: 18px;
+      border-bottom: 3px solid var(--navy);
+    }
+
+    h1 {
+      margin: 0;
+      color: var(--black);
+      font-size: 52px;
+      line-height: 0.95;
+      font-weight: 900;
+    }
+
+    .subtitle {
+      margin-top: 10px;
+      color: var(--navy);
+      font-size: 20px;
+      line-height: 1.15;
+      font-weight: 760;
+    }
+
+    .brand {
+      display: grid;
+      gap: 8px;
+      justify-items: end;
+    }
+
+    .brand img {
+      width: 70px;
+      display: block;
+    }
+
+    .brand-url {
+      color: var(--navy);
+      font-size: 20px;
+      line-height: 1;
+      font-weight: 900;
+    }
+
+    .install {
+      margin: 18px 0;
+      display: grid;
+      grid-template-columns: 150px repeat(4, 1fr);
+      gap: 14px;
+      align-items: stretch;
+      padding: 17px 20px;
+      background: var(--navy);
+      border-radius: 8px;
+      color: var(--white);
+    }
+
+    .install-title {
+      align-self: center;
+    }
+
+    .install-title h2,
+    .quick h2 {
+      margin: 0;
+      color: var(--sky);
+      font-size: 21px;
+      line-height: 1;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .install-title p {
+      margin: 7px 0 0;
+      color: var(--white);
+      font-size: 13px;
+      line-height: 1.2;
+      font-weight: 760;
+    }
+
+    .install-item {
+      display: grid;
+      gap: 5px;
+      min-width: 0;
+    }
+
+    .install-item strong {
+      color: var(--white);
+      font-size: 14px;
+      line-height: 1.05;
+      font-weight: 900;
+    }
+
+    .install-item span {
+      color: var(--sky);
+      font-size: 12.5px;
+      line-height: 1;
+      font-weight: 850;
+    }
+
+    code,
+    .key {
+      display: inline-block;
+      padding: 2px 5px 3px;
+      border: 1px solid #c7ccd1;
+      border-radius: 5px;
+      background: var(--mist);
+      color: var(--black);
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-size: 0.9em;
+      font-weight: 850;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .install code {
+      width: 100%;
+      white-space: normal;
+      overflow-wrap: anywhere;
+      padding: 6px 7px;
+      border-color: rgba(239, 249, 255, 0.35);
+      background: rgba(129, 196, 255, 0.18);
+      color: var(--white);
+      font-size: 12.2px;
+      line-height: 1.15;
+    }
+
+    .quick-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .quick {
+      min-height: 86px;
+      padding: 15px 18px;
+      background: var(--navy);
+      border-radius: 8px;
+      color: var(--white);
+    }
+
+    .quick p {
+      margin: 9px 0 0;
+      color: var(--white);
+      font-size: 20px;
+      line-height: 1.25;
+      font-weight: 820;
+    }
+
+    .quick code {
+      color: var(--white);
+      background: rgba(129, 196, 255, 0.22);
+      border-color: rgba(239, 249, 255, 0.38);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .stack {
+      display: grid;
+      gap: 14px;
+    }
+
+    .card {
+      background: var(--white);
+      border: 2px solid var(--mist);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 0 rgba(4, 49, 83, 0.08);
+    }
+
+    .card.sky { background: #f8fcff; }
+    .card.gray { background: #f7f8f9; }
+
+    .card-title {
+      padding: 9px 13px;
+      background: var(--blue);
+      color: var(--white);
+      font-size: 18px;
+      line-height: 1.05;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .card-title.navy { background: var(--navy); }
+    .card-title.sky { background: var(--sky); color: var(--black); }
+    .card-title.gray { background: var(--gray); color: var(--white); }
+
+    .content {
+      padding: 11px 13px 13px;
+    }
+
+    .group {
+      padding: 7px 0 8px;
+      border-bottom: 1px solid var(--mist);
+    }
+
+    .group:first-child { padding-top: 0; }
+    .group:last-child { border-bottom: 0; padding-bottom: 0; }
+
+    h3 {
+      margin: 0 0 6px;
+      color: var(--black);
+      font-size: 14px;
+      line-height: 1.1;
+      font-style: italic;
+      font-weight: 850;
+    }
+
+    .item {
+      display: grid;
+      grid-template-columns: minmax(74px, auto) 1fr;
+      gap: 8px;
+      align-items: baseline;
+      margin: 4px 0;
+      color: var(--navy);
+      font-size: 13.6px;
+      line-height: 1.17;
+    }
+
+    .item.wide {
+      grid-template-columns: 1fr;
+    }
+
+    .cmd {
+      color: var(--black);
+      font-family: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .item.wide .cmd {
+      white-space: normal;
+      overflow-wrap: anywhere;
+    }
+
+    .callout {
+      margin-bottom: 8px;
+      padding: 10px 12px;
+      border-radius: 7px;
+      background: var(--navy);
+      color: var(--white);
+      font-size: 14px;
+      line-height: 1.25;
+      font-weight: 800;
+    }
+
+    .callout strong { color: var(--sky); }
+
+    .footer {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      margin-top: 18px;
+      padding-top: 12px;
+      border-top: 2px solid var(--mist);
+      color: var(--gray);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .footer-url {
+      color: var(--navy);
+      font-size: 17px;
+      font-weight: 900;
+      margin-bottom: 3px;
+    }
+
+    .palette {
+      display: flex;
+      border: 1px solid var(--mist);
+    }
+
+    .palette div {
+      width: 38px;
+      height: 16px;
+    }
+  </style>
+</head>
+<body>
+  <main class="sheet">
+    <header class="topbar">
+      <div>
+        <h1>Kimi Code Cheat Sheet</h1>
+        <div class="subtitle">All the Kimi Code CLI commands, shortcuts, and prompts you are likely to use.</div>
+      </div>
+      <div class="brand">
+        <img src="../assets/coder.svg?v=logo-20260530" alt="Kimi Code logo">
+        <div class="brand-url">kimi.com/code</div>
+      </div>
+    </header>
+
+    <section class="install">
+      <div class="install-title">
+        <h2>Install</h2>
+        <p>Script install is recommended. npm requires Node.js 24.15.0+.</p>
+      </div>
+      <div class="install-item">
+        <strong>macOS / Linux</strong>
+        <span>Script install</span>
+        <code>curl -fsSL https://code.kimi.com/kimi-code/install.sh | bash</code>
+      </div>
+      <div class="install-item">
+        <strong>Windows PowerShell</strong>
+        <span>No Node.js required</span>
+        <code>irm https://code.kimi.com/kimi-code/install.ps1 | iex</code>
+      </div>
+      <div class="install-item">
+        <strong>npm</strong>
+        <span>@moonshot-ai/kimi-code</span>
+        <code>npm install -g @moonshot-ai/kimi-code</code>
+      </div>
+      <div class="install-item">
+        <strong>pnpm</strong>
+        <span>Alternative package manager</span>
+        <code>pnpm add -g @moonshot-ai/kimi-code</code>
+      </div>
+    </section>
+
+    <section class="quick-row">
+      <div class="quick">
+        <h2>Fast Start</h2>
+        <p><code>kimi</code> in a repo. Use <code>/init</code> once, <code>/plan</code> for risky work, and <code>/compact</code> when context gets long.</p>
+      </div>
+      <div class="quick">
+        <h2>Trust Rule</h2>
+        <p><code>--yolo</code> is for trusted workspaces only. Keep approvals on when touching unfamiliar code or production data.</p>
+      </div>
+    </section>
+
+    <section class="grid">
+      <div class="stack">
+        <article class="card sky">
+          <div class="card-title">CLI Command</div>
+          <div class="content">
+            <div class="group">
+              <h3>Open or resume</h3>
+              <div class="item"><span class="cmd">kimi</span><span>Open in current repo.</span></div>
+              <div class="item"><span class="cmd">--continue</span><span>Resume latest session here.</span></div>
+              <div class="item"><span class="cmd">--session &lt;id&gt;</span><span>Resume a specific session.</span></div>
+            </div>
+            <div class="group">
+              <h3>Automation</h3>
+              <div class="item"><span class="cmd">-p "..."</span><span>Run one prompt.</span></div>
+              <div class="item"><span class="cmd">--output-format stream-json</span><span>Emit JSONL events.</span></div>
+              <div class="item"><span class="cmd">--model &lt;model&gt;</span><span>Select model.</span></div>
+            </div>
+            <div class="group">
+              <h3>Modes</h3>
+              <div class="item"><span class="cmd">--plan</span><span>Start in Plan Mode.</span></div>
+              <div class="item"><span class="cmd">--yolo</span><span>Auto-approve routine actions.</span></div>
+              <div class="item"><span class="cmd">--skills-dir &lt;dir&gt;</span><span>Load custom Skills.</span></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card gray">
+          <div class="card-title gray">Background Tasks</div>
+          <div class="content">
+            <div class="item"><span class="cmd">/tasks</span><span>Open background task list.</span></div>
+            <div class="item"><span class="cmd">TaskList</span><span>List running tasks.</span></div>
+            <div class="item"><span class="cmd">TaskOutput</span><span>View task output.</span></div>
+            <div class="item"><span class="cmd">TaskStop</span><span>Stop a running task.</span></div>
+          </div>
+        </article>
+      </div>
+
+      <div class="stack">
+        <article class="card gray">
+          <div class="card-title sky">Slash Commands</div>
+          <div class="content">
+            <div class="group">
+              <h3>Session</h3>
+              <div class="item"><span class="cmd">/new</span><span>Start fresh.</span></div>
+              <div class="item"><span class="cmd">/sessions</span><span>Resume past work.</span></div>
+              <div class="item"><span class="cmd">/fork</span><span>Fork current session.</span></div>
+              <div class="item"><span class="cmd">/compact</span><span>Compress context.</span></div>
+              <div class="item"><span class="cmd">/title</span><span>Rename session.</span></div>
+            </div>
+            <div class="group">
+              <h3>Status</h3>
+              <div class="item"><span class="cmd">/help</span><span>Show commands.</span></div>
+              <div class="item"><span class="cmd">/usage</span><span>Tokens and quota.</span></div>
+              <div class="item"><span class="cmd">/status</span><span>Version, model, dir, mode.</span></div>
+              <div class="item"><span class="cmd">/exit</span><span>Quit.</span></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-title sky">Account & Config</div>
+          <div class="content">
+            <div class="group">
+              <h3>Account</h3>
+              <div class="item"><span class="cmd">/login</span><span>Sign in.</span></div>
+              <div class="item"><span class="cmd">/logout</span><span>Clear credentials.</span></div>
+              <div class="item"><span class="cmd">/connect</span><span>Provider and model.</span></div>
+            </div>
+            <div class="group">
+              <h3>Preferences</h3>
+              <div class="item"><span class="cmd">/model</span><span>Switch model.</span></div>
+              <div class="item"><span class="cmd">/settings</span><span>Open settings.</span></div>
+              <div class="item"><span class="cmd">/theme</span><span>Switch theme.</span></div>
+              <div class="item"><span class="cmd">/editor</span><span>External editor.</span></div>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <div class="stack">
+        <article class="card sky">
+          <div class="card-title navy">Session & Plan</div>
+          <div class="content">
+            <div class="group">
+              <h3>Context</h3>
+              <div class="item"><span class="cmd">/init</span><span>Generate or refresh AGENTS.md.</span></div>
+              <div class="item"><span class="cmd">/compact</span><span>Compress conversation context.</span></div>
+              <div class="item"><span class="cmd">/export-md</span><span>Export session as Markdown.</span></div>
+              <div class="item"><span class="cmd">/export-debug-zip</span><span>Create debug ZIP.</span></div>
+            </div>
+            <div class="group">
+              <h3>Plan Mode</h3>
+              <div class="callout"><strong>Use Plan Mode</strong> for broad, risky, or unclear tasks.</div>
+              <div class="item"><span><span class="key">Shift</span> <span class="key">Tab</span></span><span>Toggle Plan Mode.</span></div>
+              <div class="item"><span class="cmd">/plan on</span><span>Enter Plan Mode.</span></div>
+              <div class="item"><span class="cmd">/plan off</span><span>Exit Plan Mode.</span></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-title navy">Skills & Extensions</div>
+          <div class="content">
+            <div class="item"><span class="cmd">/skill:name</span><span>Run an installed Skill.</span></div>
+            <div class="item"><span class="cmd">/name</span><span>Shortcut when no conflict.</span></div>
+            <div class="item"><span class="cmd">/mcp</span><span>Check MCP status.</span></div>
+            <div class="item"><span class="cmd">/mcp-config</span><span>Configure MCP servers.</span></div>
+            <div class="item"><span class="cmd">/plugins</span><span>Manage plugins.</span></div>
+          </div>
+        </article>
+      </div>
+
+      <div class="stack">
+        <article class="card sky">
+          <div class="card-title">Built-In Tools</div>
+          <div class="content">
+            <div class="group">
+              <h3>Files & search</h3>
+              <div class="item"><span class="cmd">Read</span><span>Read text files.</span></div>
+              <div class="item"><span class="cmd">Write</span><span>Create or overwrite files.</span></div>
+              <div class="item"><span class="cmd">Edit</span><span>Replace exact content.</span></div>
+              <div class="item"><span class="cmd">Grep</span><span>Search file contents.</span></div>
+              <div class="item"><span class="cmd">Glob</span><span>Find files by pattern.</span></div>
+            </div>
+            <div class="group">
+              <h3>Runtime & agentic work</h3>
+              <div class="item"><span class="cmd">Bash</span><span>Run shell commands.</span></div>
+              <div class="item"><span class="cmd">WebSearch</span><span>Search web when available.</span></div>
+              <div class="item"><span class="cmd">FetchURL</span><span>Fetch page content.</span></div>
+              <div class="item"><span class="cmd">TodoList</span><span>Manage visible todos.</span></div>
+              <div class="item"><span class="cmd">Agent</span><span>Spawn a subagent.</span></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="card-title navy">Keyboard</div>
+          <div class="content">
+            <div class="group">
+              <h3>Input</h3>
+              <div class="item"><span><span class="key">Enter</span></span><span>Submit prompt.</span></div>
+              <div class="item"><span><span class="key">Shift</span> <span class="key">Enter</span></span><span>New line.</span></div>
+              <div class="item"><span><span class="key">Ctrl</span> <span class="key">G</span></span><span>Edit in external editor.</span></div>
+              <div class="item"><span><span class="key">Ctrl</span> <span class="key">V</span></span><span>Paste image/video.</span></div>
+            </div>
+            <div class="group">
+              <h3>While running</h3>
+              <div class="item"><span><span class="key">Ctrl</span> <span class="key">S</span></span><span>Steer running response.</span></div>
+              <div class="item"><span><span class="key">Esc</span></span><span>Stop or cancel.</span></div>
+              <div class="item"><span><span class="key">Ctrl</span> <span class="key">O</span></span><span>Expand tool output.</span></div>
+              <div class="item"><span><span class="key">Ctrl</span> <span class="key">E</span></span><span>Expand plan or preview.</span></div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div>
+        <div class="footer-url">kimi.com/code</div>
+        <div>An open-source agentic coding agent in your terminal</div>
+      </div>
+      <div class="palette" aria-hidden="true">
+        <div style="background:#eff9ff"></div>
+        <div style="background:#ffffff"></div>
+        <div style="background:#81c4ff"></div>
+        <div style="background:#e1e3e6"></div>
+        <div style="background:#043153"></div>
+        <div style="background:#000000"></div>
+        <div style="background:#0a7aff"></div>
+        <div style="background:#919391"></div>
+      </div>
+    </footer>
+  </main>
+</body>
+</html>

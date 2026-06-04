@@ -1,0 +1,749 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kimi Code Cheat Sheet</title>
+  <link rel="icon" href="./assets/coder.svg" type="image/svg+xml">
+  <script src="./assets/html2canvas.min.js" defer></script>
+  <style>
+    :root {
+      --bg: #f4f8fb;
+      --panel: #ffffff;
+      --ink: #071e31;
+      --muted: #5d6b76;
+      --line: #d8e1e8;
+      --blue: #0a7aff;
+      --navy: #043153;
+      --sky: #81c4ff;
+      --shadow: 0 18px 48px rgba(4, 49, 83, .16);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }
+
+    .app {
+      height: 100vh;
+      height: 100dvh;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      overflow: hidden;
+    }
+
+    .toolbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto auto;
+      gap: 12px;
+      align-items: center;
+      padding: 10px 18px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(244, 248, 251, .92);
+      backdrop-filter: blur(16px);
+    }
+
+    .title {
+      min-width: 0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 16px;
+      font-weight: 850;
+      color: var(--navy);
+      overflow: hidden;
+    }
+
+    .title div {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .title img {
+      width: 50px;
+      height: 34px;
+      display: block;
+      flex: 0 0 auto;
+      object-fit: contain;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .segmented {
+      display: inline-grid;
+      grid-template-columns: 1fr 1fr;
+      padding: 3px;
+      gap: 3px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+    }
+
+    button {
+      appearance: none;
+      border: 0;
+      border-radius: 6px;
+      min-height: 34px;
+      padding: 0 13px;
+      color: var(--ink);
+      background: transparent;
+      font: inherit;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    button[aria-pressed="true"] {
+      color: #fff;
+      background: var(--navy);
+    }
+
+    .download {
+      color: #fff;
+      background: var(--blue);
+      box-shadow: 0 8px 20px rgba(10, 122, 255, .2);
+    }
+
+    .download:disabled {
+      cursor: wait;
+      opacity: .68;
+    }
+
+    .updated {
+      min-width: 184px;
+      padding: 6px 12px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--panel);
+      color: var(--navy);
+      text-align: right;
+      font-size: 14px;
+      line-height: 1.25;
+      font-weight: 850;
+    }
+
+    .updated span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .stage {
+      min-width: 0;
+      min-height: 0;
+      display: grid;
+      grid-template-rows: minmax(0, 1fr) auto;
+      align-items: center;
+      padding: 14px 18px 16px;
+      overflow: hidden;
+    }
+
+    .mockup-shell {
+      width: max-content;
+      max-width: 100%;
+      margin: auto;
+      transition: transform .18s ease;
+    }
+
+    .mockup-frame {
+      display: grid;
+      grid-template-rows: 26px auto;
+      padding: 10px;
+      border: 1px solid #cbd8e2;
+      border-radius: 18px;
+      background: linear-gradient(180deg, #ffffff 0%, #eef4f8 100%);
+      box-shadow: 0 18px 44px rgba(4, 49, 83, .16), inset 0 0 0 1px rgba(255, 255, 255, .85);
+    }
+
+    .mockup-frame.portrait {
+      border-radius: 22px;
+      padding: 11px;
+    }
+
+    .mockup-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 0 5px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+      line-height: 1;
+    }
+
+    .mockup-dots {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .mockup-dots span {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #aab8c3;
+    }
+
+    .mockup-dots span:first-child {
+      background: #ff6b5f;
+    }
+
+    .mockup-dots span:nth-child(2) {
+      background: #ffbf3f;
+    }
+
+    .mockup-dots span:nth-child(3) {
+      background: #45c568;
+    }
+
+    .preview {
+      position: relative;
+      margin: 0 auto;
+      border: 1px solid #cfdae3;
+      border-radius: 10px;
+      box-shadow: none;
+      background: #eff9ff;
+      overflow: hidden;
+    }
+
+    .mockup-frame.portrait .preview {
+      border-radius: 12px;
+    }
+
+    iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      border: 0;
+      transform-origin: top left;
+      background: #eff9ff;
+    }
+
+    .status {
+      margin-top: 8px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+      min-height: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .toolbar {
+        grid-template-columns: 1fr;
+        align-items: stretch;
+        padding: 10px 12px;
+      }
+
+      .controls {
+        justify-content: space-between;
+      }
+
+      .segmented {
+        flex: 1;
+      }
+
+      .updated {
+        min-width: 0;
+        text-align: left;
+      }
+
+      .stage {
+        padding: 10px 10px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="toolbar">
+      <div class="title">
+        <img src="./assets/coder.svg" alt="">
+        <div>Kimi Code Cheat Sheet</div>
+      </div>
+      <div class="controls" aria-label="视图和下载">
+        <div class="segmented" role="group" aria-label="版本切换">
+          <button type="button" data-mode="portrait" aria-pressed="true">竖版</button>
+          <button type="button" data-mode="landscape" aria-pressed="false">横版</button>
+        </div>
+        <div class="segmented" role="group" aria-label="语言切换">
+          <button type="button" data-lang="zh" aria-pressed="true">中文</button>
+          <button type="button" data-lang="en" aria-pressed="false">EN</button>
+        </div>
+        <button class="download" type="button" id="download">下载图片</button>
+      </div>
+      <time class="updated" id="updated" datetime="2026-05-30">
+        <span>更新日期</span>
+        5月30日
+      </time>
+    </header>
+
+    <section class="stage" aria-label="Cheat sheet 预览">
+      <div class="mockup-shell" id="mockupShell">
+        <div class="mockup-frame portrait" id="mockupFrame">
+          <div class="mockup-bar" aria-hidden="true">
+            <div class="mockup-dots"><span></span><span></span><span></span></div>
+            <div id="mockupLabel">Kimi Code</div>
+          </div>
+          <div class="preview" id="preview">
+            <iframe id="sheetFrame" title="Kimi Code cheat sheet" src="./sheets/portrait.html?v=logo-20260530"></iframe>
+          </div>
+        </div>
+      </div>
+      <div class="status" id="status"></div>
+    </section>
+  </main>
+
+  <script>
+    const modes = {
+      portrait: {
+        labels: { zh: "竖版", en: "Portrait" },
+        src: "./sheets/portrait.html?v=logo-20260530",
+        filenames: {
+          zh: "kimi-code-cheatsheet-zh-portrait.png",
+          en: "kimi-code-cheatsheet-en-portrait.png"
+        }
+      },
+      landscape: {
+        labels: { zh: "横版", en: "Landscape" },
+        src: "./sheets/landscape.html?v=logo-20260530",
+        filenames: {
+          zh: "kimi-code-cheatsheet-zh-landscape.png",
+          en: "kimi-code-cheatsheet-en-landscape.png"
+        }
+      }
+    };
+
+    const uiText = {
+      zh: {
+        appTitle: "Kimi Code Cheat Sheet",
+        portrait: "竖版",
+        landscape: "横版",
+        download: "下载图片",
+        generating: "生成中",
+        loading: "正在载入...",
+        libraryLoading: "下载组件还在载入，请稍后再试。",
+        generatingPng: "正在生成高清 PNG...",
+        generated: "已生成",
+        failed: "生成失败，请刷新页面后重试。",
+        updatedLabel: "更新日期",
+        updatedDate: "5月30日",
+        previewLabel: "Cheat sheet 预览"
+      },
+      en: {
+        appTitle: "Kimi Code Cheat Sheet",
+        portrait: "Portrait",
+        landscape: "Landscape",
+        download: "Download PNG",
+        generating: "Generating",
+        loading: "Loading...",
+        libraryLoading: "The download component is still loading. Try again in a moment.",
+        generatingPng: "Generating high-resolution PNG...",
+        generated: "Generated",
+        failed: "Export failed. Refresh the page and try again.",
+        updatedLabel: "Updated",
+        updatedDate: "May 30",
+        previewLabel: "Cheat sheet preview"
+      }
+    };
+
+    const zhMap = {
+      "Kimi Code Cheat Sheet Landscape": "Kimi Code 速查表横版",
+      "Kimi Code Cheat Sheet": "Kimi Code 速查表",
+      "All the Kimi Code CLI commands, shortcuts, and prompts you are likely to use.": "常用 Kimi Code CLI 命令、快捷键和提示词速查。",
+      "Install": "安装",
+      "Script install (recommended)": "脚本安装（推荐）",
+      "Script install is recommended. npm requires Node.js 24.15.0+.": "推荐使用脚本安装。npm 需要 Node.js 24.15.0+。",
+      "Script install": "脚本安装",
+      "No Node.js required": "无需 Node.js",
+      "Requires Node.js 24.15.0+": "需要 Node.js 24.15.0+",
+      "Alternative package manager": "其他包管理器",
+      "Fast Start": "快速开始",
+      "in a repo. Use": "在代码仓库中运行。使用",
+      "once,": "初始化一次，",
+      "for risky work, and": "处理高风险任务，",
+      "when context gets long.": "在上下文变长时压缩。",
+      "Trust Rule": "信任规则",
+      "is for trusted workspaces only. Keep approvals on when touching unfamiliar code or production data.": "仅用于可信工作区。处理陌生代码或生产数据时请保持审批开启。",
+      "Start Fast": "快速启动",
+      "Open or resume": "打开或恢复",
+      "Open Kimi Code in the current repo.": "在当前仓库打开 Kimi Code。",
+      "Open in current repo.": "在当前仓库打开。",
+      "Resume the latest session here.": "恢复此处最近的会话。",
+      "Resume latest session here.": "恢复此处最近的会话。",
+      "Pick an older session to resume.": "选择较早的会话恢复。",
+      "Resume a specific session.": "恢复指定会话。",
+      "Run from shell": "从终端运行",
+      "Run one non-interactive prompt.": "运行一次非交互提示。",
+      "Run one prompt.": "运行一次提示。",
+      "JSONL output for automation.": "输出 JSONL，便于自动化。",
+      "Emit JSONL events.": "输出 JSONL 事件。",
+      "Start with a specific model.": "使用指定模型启动。",
+      "Select model.": "选择模型。",
+      "Modes": "模式",
+      "Start with Plan Mode on.": "启动时开启 Plan Mode。",
+      "Start in Plan Mode.": "以 Plan Mode 启动。",
+      "Auto-approve routine actions.": "自动批准常规操作。",
+      "Load custom Skills.": "加载自定义 Skills。",
+      "CLI Automation": "CLI 自动化",
+      "Automation": "自动化",
+      "Non-interactive prompts": "非交互提示",
+      "Run one prompt and print the response.": "运行一次提示并打印回复。",
+      "Long-form equivalent of": "等价的长写法：",
+      "Structured output": "结构化输出",
+      "Emit JSONL events for scripts.": "为脚本输出 JSONL 事件。",
+      "Select a model for the run.": "为本次运行选择模型。",
+      "Session targeting": "会话定位",
+      "Resume latest session in this directory.": "恢复当前目录最近的会话。",
+      "Export a session bundle.": "导出会话包。",
+      "Background Tasks": "后台任务",
+      "Open the background task list.": "打开后台任务列表。",
+      "Open background task list.": "打开后台任务列表。",
+      "List running background tasks.": "列出正在运行的后台任务。",
+      "List running tasks.": "列出正在运行的任务。",
+      "View task output.": "查看任务输出。",
+      "Stop a running task.": "停止正在运行的任务。",
+      "Task tools appear in the built-in tools reference and follow permission rules.": "任务工具会出现在内置工具参考中，并遵循权限规则。",
+      "Useful Slash Commands": "常用斜杠命令",
+      "Slash Commands": "斜杠命令",
+      "Session": "会话",
+      "Start fresh.": "开启新会话。",
+      "Resume past work.": "恢复历史工作。",
+      "Try a different direction.": "尝试不同方向。",
+      "Fork current session.": "复制当前会话分支。",
+      "Name the session.": "命名会话。",
+      "Rename session.": "重命名会话。",
+      "Compress long context.": "压缩较长上下文。",
+      "Compress context.": "压缩上下文。",
+      "Config": "配置",
+      "Switch model.": "切换模型。",
+      "Configure provider/model.": "配置服务商/模型。",
+      "Provider and model.": "服务商和模型。",
+      "Open settings.": "打开设置。",
+      "Choose approval mode.": "选择审批模式。",
+      "Set editor for": "设置编辑器用于",
+      "External editor.": "外部编辑器。",
+      "Status": "状态",
+      "Show commands.": "显示命令。",
+      "Tokens and quota.": "Token 与额度。",
+      "Check tokens and quota.": "查看 Token 与额度。",
+      "Version, model, dir, mode.": "版本、模型、目录、模式。",
+      "See version, model, dir, mode.": "查看版本、模型、目录、模式。",
+      "View background tasks.": "查看后台任务。",
+      "Quit.": "退出。",
+      "Account & Config": "账户与配置",
+      "Account": "账户",
+      "Sign in.": "登录。",
+      "Sign in with OAuth or API key.": "使用 OAuth 或 API key 登录。",
+      "Clear credentials.": "清除凭据。",
+      "Clear current credentials.": "清除当前凭据。",
+      "Choose provider and model.": "选择服务商和模型。",
+      "Preferences": "偏好设置",
+      "Switch the current model.": "切换当前模型。",
+      "Open settings in the TUI.": "在 TUI 中打开设置。",
+      "Open configuration UI.": "打开配置界面。",
+      "Switch terminal theme.": "切换终端主题。",
+      "Switch theme.": "切换主题。",
+      "Control": "控制",
+      "Choose permission mode.": "选择权限模式。",
+      "Configure external editor.": "配置外部编辑器。",
+      "Toggle auto-approve mode.": "切换自动批准模式。",
+      "Skills & Extensions": "Skills 与扩展",
+      "Run an installed Skill.": "运行已安装的 Skill。",
+      "Shortcut when no built-in conflicts.": "无内置冲突时的快捷写法。",
+      "Shortcut when no conflict.": "无冲突时的快捷写法。",
+      "Check MCP server status.": "查看 MCP 服务状态。",
+      "Check MCP status.": "查看 MCP 状态。",
+      "Configure MCP servers and OAuth.": "配置 MCP 服务与 OAuth。",
+      "Configure MCP servers.": "配置 MCP 服务。",
+      "Manage plugins.": "管理插件。",
+      "Use Skills for team conventions, review rules, release notes, debugging playbooks, and repeatable repo workflows.": "Skills 适合沉淀团队规范、审查规则、发布说明、调试手册和可复用仓库流程。",
+      "Session Management": "会话管理",
+      "Session & Plan": "会话与计划",
+      "Start, resume, fork": "开始、恢复、分支",
+      "Start a fresh session.": "开始新会话。",
+      "Clear current conversation.": "清空当前对话。",
+      "Browse previous sessions.": "浏览历史会话。",
+      "Resume past work.": "恢复历史工作。",
+      "Fork the current session.": "复制当前会话分支。",
+      "Context": "上下文",
+      "Generate or refresh AGENTS.md.": "生成或刷新 AGENTS.md。",
+      "Compress conversation context.": "压缩对话上下文。",
+      "Show or rename the session.": "显示或重命名会话。",
+      "Export": "导出",
+      "Export the session as Markdown.": "将会话导出为 Markdown。",
+      "Export session as Markdown.": "将会话导出为 Markdown。",
+      "Create a debug ZIP archive.": "创建调试 ZIP 包。",
+      "Create debug ZIP.": "创建调试 ZIP。",
+      "Bundle a session from the CLI.": "从 CLI 打包会话。",
+      "Plan Mode": "Plan Mode",
+      "Use Plan Mode": "使用 Plan Mode",
+      "when the task is broad, risky, unclear, or likely to touch multiple files.": "适合范围大、有风险、不明确，或可能改动多个文件的任务。",
+      "for broad, risky, or unclear tasks.": "适合范围大、有风险或不明确的任务。",
+      "Good for": "适合场景",
+      "Large refactors": "大型重构",
+      "Architecture changes": "架构调整",
+      "Migration planning": "迁移规划",
+      "Bug investigation": "Bug 排查",
+      "PR review before edit": "编辑前 PR 审查",
+      "Ambiguous requests": "需求不明确",
+      "Controls": "控制方式",
+      "Toggle Plan Mode": "切换 Plan Mode",
+      "Toggle Plan Mode.": "切换 Plan Mode。",
+      "Enter Plan Mode": "进入 Plan Mode",
+      "Enter Plan Mode.": "进入 Plan Mode。",
+      "Exit Plan Mode": "退出 Plan Mode",
+      "Exit Plan Mode.": "退出 Plan Mode。",
+      "Clear current plan": "清空当前计划",
+      "Permissions": "权限",
+      "Low risk:": "低风险：",
+      "reading files, searching code, checking status.": "读取文件、搜索代码、查看状态。",
+      "Needs care:": "需谨慎：",
+      "file writes, edits, shell commands, and task stops.": "写文件、编辑、终端命令、停止任务。",
+      "Trusted repo:": "可信仓库：",
+      "can reduce approval friction.": "可以减少审批打断。",
+      "Unknown repo:": "陌生仓库：",
+      "keep approvals on until you understand the blast radius.": "理解影响范围前保持审批开启。",
+      "Built-In Tools": "内置工具",
+      "Files & search": "文件与搜索",
+      "Read": "读取",
+      "Read text files.": "读取文本文件。",
+      "Write": "写入",
+      "Create or overwrite files.": "创建或覆盖文件。",
+      "Edit": "编辑",
+      "Replace exact file content.": "替换精确文件内容。",
+      "Replace exact content.": "替换精确内容。",
+      "Grep": "搜索",
+      "Search file contents.": "搜索文件内容。",
+      "Glob": "匹配",
+      "Find files by pattern.": "按模式查找文件。",
+      "Runtime & web": "运行与网页",
+      "Runtime & agentic work": "运行与代理任务",
+      "Bash": "终端",
+      "Run shell commands.": "运行终端命令。",
+      "WebSearch": "网页搜索",
+      "Search the web when available.": "可用时搜索网页。",
+      "Search web when available.": "可用时搜索网页。",
+      "FetchURL": "抓取 URL",
+      "Fetch page content.": "抓取页面内容。",
+      "ReadMediaFile": "读取媒体",
+      "Read image/video files.": "读取图片/视频文件。",
+      "Agentic work": "代理任务",
+      "TodoList": "待办列表",
+      "Manage visible todos.": "管理可见待办。",
+      "Agent": "子代理",
+      "Spawn a subagent.": "启动子代理。",
+      "Skill": "Skill",
+      "Invoke a registered Skill.": "调用已注册 Skill。",
+      "Keyboard Shortcuts": "键盘快捷键",
+      "Keyboard": "键盘",
+      "Input": "输入",
+      "Submit prompt": "提交提示",
+      "Submit prompt.": "提交提示。",
+      "New line": "换行",
+      "New line.": "换行。",
+      "Input history": "输入历史",
+      "Edit in external editor": "用外部编辑器编辑",
+      "Edit in external editor.": "用外部编辑器编辑。",
+      "Paste image/video on macOS/Linux": "在 macOS/Linux 粘贴图片/视频",
+      "Paste image/video.": "粘贴图片/视频。",
+      "While Kimi is working": "Kimi 工作时",
+      "While running": "运行中",
+      "Steer the running response": "引导正在生成的回复",
+      "Steer running response.": "引导正在生成的回复。",
+      "Stop, cancel, or close popup": "停止、取消或关闭弹窗",
+      "Stop or cancel.": "停止或取消。",
+      "Interrupt output or clear input": "中断输出或清空输入",
+      "Expand/collapse tool output": "展开/收起工具输出",
+      "Expand tool output.": "展开工具输出。",
+      "Expand/collapse plan or preview": "展开/收起计划或预览",
+      "Expand plan or preview.": "展开计划或预览。",
+      "Approval panel": "审批面板",
+      "Pick option by number": "按数字选择选项",
+      "Confirm selection": "确认选择",
+      "Reject request": "拒绝请求",
+      "An open-source agentic coding agent in your terminal": "终端里的开源代理式编程助手"
+    };
+
+    const enMap = Object.fromEntries(Object.entries(zhMap).map(([en, zh]) => [zh, en]));
+
+    const frame = document.getElementById("sheetFrame");
+    const mockupShell = document.getElementById("mockupShell");
+    const mockupFrame = document.getElementById("mockupFrame");
+    const mockupLabel = document.getElementById("mockupLabel");
+    const preview = document.getElementById("preview");
+    const status = document.getElementById("status");
+    const downloadButton = document.getElementById("download");
+    const modeButtons = [...document.querySelectorAll("[data-mode]")];
+    const langButtons = [...document.querySelectorAll("[data-lang]")];
+    let currentMode = "portrait";
+    let currentLang = "zh";
+    let naturalSize = { width: 1600, height: 1600 };
+    let resizeTimer;
+
+    function updateUiLanguage() {
+      const text = uiText[currentLang];
+      document.documentElement.lang = currentLang === "zh" ? "zh-CN" : "en";
+      document.querySelector(".title div").textContent = text.appTitle;
+      mockupLabel.textContent = text.appTitle;
+      document.querySelector("[data-mode='portrait']").textContent = text.portrait;
+      document.querySelector("[data-mode='landscape']").textContent = text.landscape;
+      downloadButton.textContent = text.download;
+      const updated = document.getElementById("updated");
+      updated.innerHTML = `<span>${text.updatedLabel}</span>${text.updatedDate}`;
+      document.querySelector(".stage").setAttribute("aria-label", text.previewLabel);
+      langButtons.forEach((button) => {
+        button.setAttribute("aria-pressed", String(button.dataset.lang === currentLang));
+      });
+    }
+
+    function measureSheet() {
+      const doc = frame.contentDocument;
+      const sheet = doc && doc.querySelector(".sheet");
+      if (!sheet) return naturalSize;
+      const rect = sheet.getBoundingClientRect();
+      return {
+        width: Math.ceil(rect.width || sheet.scrollWidth || 1600),
+        height: Math.ceil(rect.height || sheet.scrollHeight || doc.body.scrollHeight || 1200)
+      };
+    }
+
+    function fitPreview() {
+      naturalSize = measureSheet();
+      const stage = document.querySelector(".stage");
+      const statusHeight = status.offsetHeight + 10;
+      const chromeHeight = 26;
+      const framePadding = currentMode === "portrait" ? 22 : 20;
+      const verticalBreathingRoom = 34;
+      const availableWidth = Math.max(300, stage.clientWidth - 8 - framePadding);
+      const availableHeight = Math.max(260, stage.clientHeight - statusHeight - chromeHeight - framePadding - verticalBreathingRoom);
+      const scale = Math.min(1, availableWidth / naturalSize.width, availableHeight / naturalSize.height);
+      preview.style.width = `${Math.round(naturalSize.width * scale)}px`;
+      preview.style.height = `${Math.round(naturalSize.height * scale)}px`;
+      frame.style.width = `${naturalSize.width}px`;
+      frame.style.height = `${naturalSize.height}px`;
+      frame.style.transform = `scale(${scale})`;
+      mockupShell.style.maxWidth = `${Math.round(naturalSize.width * scale + framePadding)}px`;
+      status.textContent = `${modes[currentMode].labels[currentLang]} · ${naturalSize.width} × ${naturalSize.height}px`;
+    }
+
+    function applySheetLanguage() {
+      const doc = frame.contentDocument;
+      if (!doc) return;
+      const map = currentLang === "zh" ? zhMap : enMap;
+      doc.documentElement.lang = currentLang === "zh" ? "zh-CN" : "en";
+      if (doc.title && map[doc.title]) doc.title = map[doc.title];
+      const walker = doc.createTreeWalker(doc.body, NodeFilter.SHOW_TEXT);
+      const nodes = [];
+      while (walker.nextNode()) nodes.push(walker.currentNode);
+      nodes.forEach((node) => {
+        const original = node.nodeValue;
+        const trimmed = original.trim();
+        if (!trimmed || !map[trimmed]) return;
+        node.nodeValue = original.replace(trimmed, map[trimmed]);
+      });
+    }
+
+    function setMode(mode) {
+      currentMode = mode;
+      mockupFrame.classList.toggle("portrait", mode === "portrait");
+      mockupFrame.classList.toggle("landscape", mode === "landscape");
+      modeButtons.forEach((button) => {
+        button.setAttribute("aria-pressed", String(button.dataset.mode === mode));
+      });
+      status.textContent = uiText[currentLang].loading;
+      frame.src = modes[mode].src;
+    }
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      updateUiLanguage();
+      applySheetLanguage();
+      fitPreview();
+    }
+
+    async function downloadCurrentSheet() {
+      if (!window.html2canvas) {
+        status.textContent = uiText[currentLang].libraryLoading;
+        return;
+      }
+
+      const doc = frame.contentDocument;
+      const sheet = doc && doc.querySelector(".sheet");
+      if (!sheet) return;
+
+      downloadButton.disabled = true;
+      downloadButton.textContent = uiText[currentLang].generating;
+      status.textContent = uiText[currentLang].generatingPng;
+
+      try {
+        const size = measureSheet();
+        const canvas = await window.html2canvas(sheet, {
+          backgroundColor: "#eff9ff",
+          scale: 2,
+          width: size.width,
+          height: size.height,
+          windowWidth: size.width,
+          windowHeight: size.height,
+          useCORS: true
+        });
+        const link = document.createElement("a");
+        link.download = modes[currentMode].filenames[currentLang];
+        link.href = canvas.toDataURL("image/png");
+        link.click();
+        status.textContent = `${uiText[currentLang].generated} ${modes[currentMode].labels[currentLang]} PNG`;
+      } catch (error) {
+        status.textContent = uiText[currentLang].failed;
+        console.error(error);
+      } finally {
+        downloadButton.disabled = false;
+        downloadButton.textContent = uiText[currentLang].download;
+      }
+    }
+
+    frame.addEventListener("load", () => {
+      applySheetLanguage();
+      fitPreview();
+      requestAnimationFrame(() => {
+        applySheetLanguage();
+        fitPreview();
+      });
+    });
+
+    modeButtons.forEach((button) => {
+      button.addEventListener("click", () => setMode(button.dataset.mode));
+    });
+
+    langButtons.forEach((button) => {
+      button.addEventListener("click", () => setLanguage(button.dataset.lang));
+    });
+
+    downloadButton.addEventListener("click", downloadCurrentSheet);
+    window.addEventListener("resize", () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(fitPreview, 80);
+    });
+
+    updateUiLanguage();
+  </script>
+</body>
+</html>
