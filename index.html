@@ -757,29 +757,62 @@
       fitPreview();
     }
 
+    function buildDownloadTarget() {
+      const doc = frame.contentDocument;
+      const sheet = doc && doc.querySelector(".sheet");
+      if (!doc || !sheet) return null;
+
+      const size = measureSheet();
+      const wrapper = document.createElement("div");
+      wrapper.style.position = "fixed";
+      wrapper.style.left = "-100000px";
+      wrapper.style.top = "0";
+      wrapper.style.width = `${size.width}px`;
+      wrapper.style.height = `${size.height}px`;
+      wrapper.style.overflow = "hidden";
+      wrapper.style.background = "#eff9ff";
+      wrapper.style.pointerEvents = "none";
+
+      const styleText = [...doc.querySelectorAll("style")]
+        .map((style) => style.textContent)
+        .join("\n");
+      const style = document.createElement("style");
+      style.textContent = styleText;
+      wrapper.appendChild(style);
+
+      const clonedSheet = sheet.cloneNode(true);
+      clonedSheet.style.margin = "0";
+      clonedSheet.querySelectorAll("img").forEach((img) => {
+        img.src = new URL(img.getAttribute("src"), frame.contentWindow.location.href).href;
+      });
+      wrapper.appendChild(clonedSheet);
+      document.body.appendChild(wrapper);
+      return { wrapper, sheet: clonedSheet, size };
+    }
+
     async function downloadCurrentSheet() {
       if (!window.html2canvas) {
         status.textContent = uiText[currentLang].libraryLoading;
         return;
       }
 
-      const doc = frame.contentDocument;
-      const sheet = doc && doc.querySelector(".sheet");
-      if (!sheet) return;
+      const target = buildDownloadTarget();
+      if (!target) return;
 
       downloadButton.disabled = true;
       downloadButton.textContent = uiText[currentLang].generating;
       status.textContent = uiText[currentLang].generatingPng;
 
       try {
-        const size = measureSheet();
-        const canvas = await window.html2canvas(sheet, {
+        const canvas = await window.html2canvas(target.sheet, {
           backgroundColor: "#eff9ff",
           scale: 2,
-          width: size.width,
-          height: size.height,
-          windowWidth: size.width,
-          windowHeight: size.height,
+          width: target.size.width,
+          height: target.size.height,
+          windowWidth: target.size.width,
+          windowHeight: target.size.height,
+          scrollX: 0,
+          scrollY: 0,
           useCORS: true
         });
         const link = document.createElement("a");
@@ -791,6 +824,7 @@
         status.textContent = uiText[currentLang].failed;
         console.error(error);
       } finally {
+        target.wrapper.remove();
         downloadButton.disabled = false;
         downloadButton.textContent = uiText[currentLang].download;
       }
