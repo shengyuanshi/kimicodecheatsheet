@@ -305,7 +305,7 @@
             <div id="mockupLabel">Kimi Code</div>
           </div>
           <div class="preview" id="preview">
-            <iframe id="sheetFrame" title="Kimi Code cheat sheet" src="./sheets/portrait.html?v=providers-20260604"></iframe>
+            <iframe id="sheetFrame" title="Kimi Code cheat sheet" src="./sheets/portrait.html?v=docs-20260610"></iframe>
           </div>
         </div>
       </div>
@@ -317,7 +317,7 @@
     const modes = {
       portrait: {
         labels: { zh: "竖版", en: "Portrait" },
-        src: "./sheets/portrait.html?v=providers-20260604",
+        src: "./sheets/portrait.html?v=docs-20260610",
         filenames: {
           zh: "kimi-code-cheatsheet-zh-portrait.png",
           en: "kimi-code-cheatsheet-en-portrait.png"
@@ -325,7 +325,7 @@
       },
       landscape: {
         labels: { zh: "横版", en: "Landscape" },
-        src: "./sheets/landscape.html?v=providers-20260604",
+        src: "./sheets/landscape.html?v=docs-20260610",
         filenames: {
           zh: "kimi-code-cheatsheet-zh-landscape.png",
           en: "kimi-code-cheatsheet-en-landscape.png"
@@ -403,8 +403,11 @@
       "Start with Plan Mode on.": "启动时开启 Plan Mode。",
       "Start in Plan Mode.": "以 Plan Mode 启动。",
       "Auto-approve routine actions.": "自动批准常规操作。",
+      "Auto-handle approvals without asking.": "自动处理审批且不提问。",
+      "Auto-handle approvals.": "自动处理审批。",
       "Load custom Skills.": "加载自定义 Skills。",
       "CLI Automation": "CLI 自动化",
+      "CLI Command": "CLI 命令",
       "Automation": "自动化",
       "Non-interactive prompts": "非交互提示",
       "Run one prompt and print the response.": "运行一次提示并打印回复。",
@@ -415,6 +418,15 @@
       "Session targeting": "会话定位",
       "Resume latest session in this directory.": "恢复当前目录最近的会话。",
       "Export a session bundle.": "导出会话包。",
+      "Subcommands": "子命令",
+      "OAuth device-code login.": "OAuth 设备码登录。",
+      "IDE / ACP JSON-RPC mode.": "IDE / ACP JSON-RPC 模式。",
+      "Validate config files.": "校验配置文件。",
+      "Manage providers from shell.": "从终端管理供应商。",
+      "Check and install updates.": "检查并安装更新。",
+      "Migrate legacy data.": "迁移旧版数据。",
+      "Auth, IDE mode, config check.": "登录、IDE 模式、配置检查。",
+      "Bundle, migrate, update.": "打包、迁移、更新。",
       "Background Tasks": "后台任务",
       "Open the background task list.": "打开后台任务列表。",
       "Open background task list.": "打开后台任务列表。",
@@ -422,32 +434,56 @@
       "List running tasks.": "列出正在运行的任务。",
       "View task output.": "查看任务输出。",
       "Stop a running task.": "停止正在运行的任务。",
+      "Schedule a future prompt.": "安排未来触发的提示。",
+      "Schedule prompt.": "安排提示。",
+      "List scheduled prompts.": "列出定时提示。",
+      "Cancel a scheduled prompt.": "取消定时提示。",
+      "List or cancel schedules.": "列出或取消定时任务。",
       "Task tools appear in the built-in tools reference and follow permission rules.": "任务工具会出现在内置工具参考中，并遵循权限规则。",
       "Useful Slash Commands": "常用斜杠命令",
       "Slash Commands": "斜杠命令",
       "Session": "会话",
       "Start fresh.": "开启新会话。",
+      "Alias for a new clean session.": "新建干净会话的别名。",
+      "Alias for new.": "新建别名。",
       "Resume past work.": "恢复历史工作。",
+      "Alias for sessions browser.": "会话浏览器别名。",
+      "Alias for sessions.": "会话别名。",
       "Try a different direction.": "尝试不同方向。",
       "Fork current session.": "复制当前会话分支。",
       "Name the session.": "命名会话。",
       "Rename session.": "重命名会话。",
+      "Alias for title rename.": "标题重命名别名。",
+      "Alias for title.": "标题别名。",
       "Compress long context.": "压缩较长上下文。",
       "Compress context.": "压缩上下文。",
       "Config": "配置",
       "Switch model.": "切换模型。",
       "Configure provider/model.": "配置服务商/模型。",
+      "Configure providers and models.": "配置供应商和模型。",
       "Provider and model.": "服务商和模型。",
       "Open settings.": "打开设置。",
+      "Alias for settings.": "设置别名。",
+      "Settings alias.": "设置别名。",
+      "Open experimental features.": "打开实验功能。",
+      "Experimental features.": "实验功能。",
       "Choose approval mode.": "选择审批模式。",
       "Set editor for": "设置编辑器用于",
       "External editor.": "外部编辑器。",
       "Status": "状态",
       "Show commands.": "显示命令。",
+      "Show commands and shortcuts.": "显示命令和快捷键。",
+      "Alias for help.": "帮助别名。",
+      "Help aliases.": "帮助别名。",
       "Tokens and quota.": "Token 与额度。",
       "Check tokens and quota.": "查看 Token 与额度。",
       "Version, model, dir, mode.": "版本、模型、目录、模式。",
       "See version, model, dir, mode.": "查看版本、模型、目录、模式。",
+      "Show CLI version.": "显示 CLI 版本。",
+      "CLI version.": "CLI 版本。",
+      "Send product feedback.": "发送产品反馈。",
+      "Open a side Agent chat.": "打开旁路 Agent 对话。",
+      "Side Agent chat.": "旁路 Agent 对话。",
       "View background tasks.": "查看后台任务。",
       "Quit.": "退出。",
       "Account & Config": "账户与配置",
@@ -467,6 +503,14 @@
       "Choose permission mode.": "选择权限模式。",
       "Configure external editor.": "配置外部编辑器。",
       "Toggle auto-approve mode.": "切换自动批准模式。",
+      "Auto-approve routine calls.": "自动批准常规调用。",
+      "Alias for yolo.": "yolo 别名。",
+      "Auto-handle tool approvals.": "自动处理工具审批。",
+      "Toggle swarm mode.": "切换 swarm mode。",
+      "Run a task with swarm mode.": "用 swarm mode 运行任务。",
+      "Start or manage goal mode.": "开始或管理目标模式。",
+      "Goal mode.": "目标模式。",
+      "Modes": "模式",
       "Skills & Extensions": "Skills 与扩展",
       "Run an installed Skill.": "运行已安装的 Skill。",
       "Shortcut when no built-in conflicts.": "无内置冲突时的快捷写法。",
@@ -475,6 +519,14 @@
       "Check MCP status.": "查看 MCP 状态。",
       "Configure MCP servers and OAuth.": "配置 MCP 服务与 OAuth。",
       "Configure MCP servers.": "配置 MCP 服务。",
+      "Create or edit a TUI theme.": "创建或编辑 TUI 主题。",
+      "Edit TUI theme.": "编辑 TUI 主题。",
+      "Edit config and TUI settings.": "编辑配置和 TUI 设置。",
+      "Edit config files.": "编辑配置文件。",
+      "Import instructions, skills, MCP.": "导入 instructions、skills 和 MCP。",
+      "Import settings.": "导入设置。",
+      "Organize local skill libraries.": "整理本地 skill 库。",
+      "Organize skills.": "整理 skills。",
       "Manage plugins.": "管理插件。",
       "Use Skills for team conventions, review rules, release notes, debugging playbooks, and repeatable repo workflows.": "Skills 适合沉淀团队规范、审查规则、发布说明、调试手册和可复用仓库流程。",
       "Session Management": "会话管理",
@@ -492,6 +544,8 @@
       "Export": "导出",
       "Export the session as Markdown.": "将会话导出为 Markdown。",
       "Export session as Markdown.": "将会话导出为 Markdown。",
+      "Alias for Markdown export.": "Markdown 导出别名。",
+      "Export alias.": "导出别名。",
       "Create a debug ZIP archive.": "创建调试 ZIP 包。",
       "Create debug ZIP.": "创建调试 ZIP。",
       "Bundle a session from the CLI.": "从 CLI 打包会话。",
@@ -514,6 +568,10 @@
       "Exit Plan Mode": "退出 Plan Mode",
       "Exit Plan Mode.": "退出 Plan Mode。",
       "Clear current plan": "清空当前计划",
+      "Tool enters Plan Mode.": "工具进入 Plan Mode。",
+      "Tool enters plan.": "工具进入计划模式。",
+      "Tool exits after plan approval.": "计划审批后工具退出。",
+      "Tool exits after approval.": "审批后工具退出。",
       "Permissions": "权限",
       "Low risk:": "低风险：",
       "reading files, searching code, checking status.": "读取文件、搜索代码、查看状态。",
@@ -552,6 +610,12 @@
       "Manage visible todos.": "管理可见待办。",
       "Agent": "子代理",
       "Spawn a subagent.": "启动子代理。",
+      "AgentSwarm": "子代理群",
+      "Run or resume many subagents.": "运行或恢复多个子代理。",
+      "Run many subagents.": "运行多个子代理。",
+      "AskUserQuestion": "用户提问",
+      "Ask structured questions.": "提出结构化问题。",
+      "Ask structured choices.": "提出结构化选项。",
       "Skill": "Skill",
       "Invoke a registered Skill.": "调用已注册 Skill。",
       "Keyboard Shortcuts": "键盘快捷键",
@@ -566,6 +630,10 @@
       "Edit in external editor.": "用外部编辑器编辑。",
       "Paste image/video on macOS/Linux": "在 macOS/Linux 粘贴图片/视频",
       "Paste image/video.": "粘贴图片/视频。",
+      "Paste image/video on Windows": "在 Windows 粘贴图片/视频",
+      "Paste on Windows.": "在 Windows 粘贴。",
+      "Undo input edit": "撤销输入编辑",
+      "Undo input edit.": "撤销输入编辑。",
       "While Kimi is working": "Kimi 工作时",
       "While running": "运行中",
       "Steer the running response": "引导正在生成的回复",
@@ -573,6 +641,9 @@
       "Stop, cancel, or close popup": "停止、取消或关闭弹窗",
       "Stop or cancel.": "停止或取消。",
       "Interrupt output or clear input": "中断输出或清空输入",
+      "Interrupt or clear input.": "中断或清空输入。",
+      "Exit when input is empty": "输入为空时退出",
+      "Exit when input is empty.": "输入为空时退出。",
       "Expand/collapse tool output": "展开/收起工具输出",
       "Expand tool output.": "展开工具输出。",
       "Expand/collapse plan or preview": "展开/收起计划或预览",
@@ -581,6 +652,10 @@
       "Pick option by number": "按数字选择选项",
       "Confirm selection": "确认选择",
       "Reject request": "拒绝请求",
+      "Scroll help popup": "滚动帮助弹窗",
+      "Scroll help popup.": "滚动帮助弹窗。",
+      "Close help popup": "关闭帮助弹窗",
+      "Close help popup.": "关闭帮助弹窗。",
       "An open-source agentic coding agent in your terminal": "终端里的开源代理式编程助手"
     };
 
@@ -595,8 +670,9 @@
     const downloadButton = document.getElementById("download");
     const modeButtons = [...document.querySelectorAll("[data-mode]")];
     const langButtons = [...document.querySelectorAll("[data-lang]")];
-    let currentMode = "portrait";
-    let currentLang = "zh";
+    const initialParams = new URLSearchParams(window.location.search);
+    let currentMode = modes[initialParams.get("mode")] ? initialParams.get("mode") : "portrait";
+    let currentLang = uiText[initialParams.get("lang")] ? initialParams.get("lang") : "zh";
     let naturalSize = { width: 1600, height: 1600 };
     let resizeTimer;
 
@@ -744,6 +820,7 @@
     });
 
     updateUiLanguage();
+    setMode(currentMode);
   </script>
 </body>
 </html>

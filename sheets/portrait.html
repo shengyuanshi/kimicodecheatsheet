@@ -457,6 +457,7 @@
               <h3>Modes</h3>
               <div class="item"><span class="cmd">kimi --plan</span><span>Start with Plan Mode on.</span></div>
               <div class="item"><span class="cmd">kimi --yolo</span><span>Auto-approve routine actions.</span></div>
+              <div class="item"><span class="cmd">kimi --auto</span><span>Auto-handle approvals without asking.</span></div>
               <div class="item"><span class="cmd">--skills-dir &lt;dir&gt;</span><span>Load custom Skills.</span></div>
             </div>
           </div>
@@ -481,6 +482,15 @@
               <div class="item"><span class="cmd">--session &lt;id&gt;</span><span>Resume a specific session.</span></div>
               <div class="item"><span class="cmd">kimi export [id]</span><span>Export a session bundle.</span></div>
             </div>
+            <div class="group">
+              <h3>Subcommands</h3>
+              <div class="item"><span class="cmd">kimi login</span><span>OAuth device-code login.</span></div>
+              <div class="item"><span class="cmd">kimi acp</span><span>IDE / ACP JSON-RPC mode.</span></div>
+              <div class="item"><span class="cmd">kimi doctor</span><span>Validate config files.</span></div>
+              <div class="item"><span class="cmd">kimi provider</span><span>Manage providers from shell.</span></div>
+              <div class="item"><span class="cmd">kimi upgrade</span><span>Check and install updates.</span></div>
+              <div class="item"><span class="cmd">kimi migrate</span><span>Migrate legacy data.</span></div>
+            </div>
           </div>
         </article>
 
@@ -491,6 +501,9 @@
             <div class="item"><span class="cmd">TaskList</span><span>List running background tasks.</span></div>
             <div class="item"><span class="cmd">TaskOutput</span><span>View task output.</span></div>
             <div class="item"><span class="cmd">TaskStop</span><span>Stop a running task.</span></div>
+            <div class="item"><span class="cmd">CronCreate</span><span>Schedule a future prompt.</span></div>
+            <div class="item"><span class="cmd">CronList</span><span>List scheduled prompts.</span></div>
+            <div class="item"><span class="cmd">CronDelete</span><span>Cancel a scheduled prompt.</span></div>
             <div class="item wide"><span>Task tools appear in the built-in tools reference and follow permission rules.</span></div>
           </div>
         </article>
@@ -503,24 +516,33 @@
             <div class="group">
               <h3>Session</h3>
               <div class="item"><span class="cmd">/new</span><span>Start fresh.</span></div>
+              <div class="item"><span class="cmd">/clear</span><span>Alias for a new clean session.</span></div>
               <div class="item"><span class="cmd">/sessions</span><span>Resume past work.</span></div>
+              <div class="item"><span class="cmd">/resume</span><span>Alias for sessions browser.</span></div>
               <div class="item"><span class="cmd">/fork</span><span>Try a different direction.</span></div>
               <div class="item"><span class="cmd">/title "..."</span><span>Name the session.</span></div>
+              <div class="item"><span class="cmd">/rename</span><span>Alias for title rename.</span></div>
               <div class="item"><span class="cmd">/compact</span><span>Compress long context.</span></div>
             </div>
             <div class="group">
               <h3>Config</h3>
               <div class="item"><span class="cmd">/model</span><span>Switch model.</span></div>
-              <div class="item"><span class="cmd">/providers</span><span>Configure provider/model.</span></div>
+              <div class="item"><span class="cmd">/provider</span><span>Configure providers and models.</span></div>
               <div class="item"><span class="cmd">/settings</span><span>Open settings.</span></div>
+              <div class="item"><span class="cmd">/config</span><span>Alias for settings.</span></div>
+              <div class="item"><span class="cmd">/experiments</span><span>Open experimental features.</span></div>
               <div class="item"><span class="cmd">/permission</span><span>Choose approval mode.</span></div>
               <div class="item"><span class="cmd">/editor</span><span>Set editor for <span class="cmd">Ctrl-G</span>.</span></div>
             </div>
             <div class="group">
               <h3>Status</h3>
-              <div class="item"><span class="cmd">/help</span><span>Show commands.</span></div>
+              <div class="item"><span class="cmd">/help</span><span>Show commands and shortcuts.</span></div>
+              <div class="item"><span class="cmd">/h</span><span>Alias for help.</span></div>
               <div class="item"><span class="cmd">/usage</span><span>Check tokens and quota.</span></div>
               <div class="item"><span class="cmd">/status</span><span>See version, model, dir, mode.</span></div>
+              <div class="item"><span class="cmd">/version</span><span>Show CLI version.</span></div>
+              <div class="item"><span class="cmd">/feedback</span><span>Send product feedback.</span></div>
+              <div class="item"><span class="cmd">/btw</span><span>Open a side Agent chat.</span></div>
               <div class="item"><span class="cmd">/tasks</span><span>View background tasks.</span></div>
               <div class="item"><span class="cmd">/exit</span><span>Quit.</span></div>
             </div>
@@ -534,7 +556,7 @@
               <h3>Account</h3>
               <div class="item"><span class="cmd">/login</span><span>Sign in with OAuth or API key.</span></div>
               <div class="item"><span class="cmd">/logout</span><span>Clear current credentials.</span></div>
-              <div class="item"><span class="cmd">/providers</span><span>Choose provider and model.</span></div>
+              <div class="item"><span class="cmd">/provider</span><span>Choose provider and model.</span></div>
             </div>
             <div class="group">
               <h3>Preferences</h3>
@@ -547,7 +569,12 @@
               <h3>Control</h3>
               <div class="item"><span class="cmd">/permission</span><span>Choose permission mode.</span></div>
               <div class="item"><span class="cmd">/editor</span><span>Configure external editor.</span></div>
-              <div class="item"><span class="cmd">/yolo</span><span>Toggle auto-approve mode.</span></div>
+              <div class="item"><span class="cmd">/yolo [on|off]</span><span>Toggle auto-approve mode.</span></div>
+              <div class="item"><span class="cmd">/yes</span><span>Alias for yolo.</span></div>
+              <div class="item"><span class="cmd">/auto [on|off]</span><span>Auto-handle tool approvals.</span></div>
+              <div class="item"><span class="cmd">/swarm on|off</span><span>Toggle swarm mode.</span></div>
+              <div class="item"><span class="cmd">/swarm &lt;task&gt;</span><span>Run a task with swarm mode.</span></div>
+              <div class="item"><span class="cmd">/goal [...]</span><span>Start or manage goal mode.</span></div>
             </div>
           </div>
         </article>
@@ -559,6 +586,10 @@
             <div class="item"><span class="cmd">/name</span><span>Shortcut when no built-in conflicts.</span></div>
             <div class="item"><span class="cmd">/mcp</span><span>Check MCP server status.</span></div>
             <div class="item"><span class="cmd">/mcp-config</span><span>Configure MCP servers and OAuth.</span></div>
+            <div class="item"><span class="cmd">/custom-theme</span><span>Create or edit a TUI theme.</span></div>
+            <div class="item"><span class="cmd">/update-config</span><span>Edit config and TUI settings.</span></div>
+            <div class="item"><span class="cmd">/import-from-cc-codex</span><span>Import instructions, skills, MCP.</span></div>
+            <div class="item"><span class="cmd">/sub-skill</span><span>Organize local skill libraries.</span></div>
             <div class="item"><span class="cmd">/plugins</span><span>Manage plugins.</span></div>
             <div class="prompt">Use Skills for team conventions, review rules, release notes, debugging playbooks, and repeatable repo workflows.</div>
           </div>
@@ -587,6 +618,7 @@
             <div class="group">
               <h3>Export</h3>
               <div class="item"><span class="cmd">/export-md</span><span>Export the session as Markdown.</span></div>
+              <div class="item"><span class="cmd">/export</span><span>Alias for Markdown export.</span></div>
               <div class="item"><span class="cmd">/export-debug-zip</span><span>Create a debug ZIP archive.</span></div>
               <div class="item"><span class="cmd">kimi export [id]</span><span>Bundle a session from the CLI.</span></div>
             </div>
@@ -618,6 +650,8 @@
               <div class="item"><span class="cmd">/plan on</span><span>Enter Plan Mode</span></div>
               <div class="item"><span class="cmd">/plan off</span><span>Exit Plan Mode</span></div>
               <div class="item"><span class="cmd">/plan clear</span><span>Clear current plan</span></div>
+              <div class="item"><span class="cmd">EnterPlanMode</span><span>Tool enters Plan Mode.</span></div>
+              <div class="item"><span class="cmd">ExitPlanMode</span><span>Tool exits after plan approval.</span></div>
             </div>
           </div>
         </article>
@@ -656,6 +690,8 @@
               <h3>Agentic work</h3>
               <div class="item"><span class="cmd">TodoList</span><span>Manage visible todos.</span></div>
               <div class="item"><span class="cmd">Agent</span><span>Spawn a subagent.</span></div>
+              <div class="item"><span class="cmd">AgentSwarm</span><span>Run or resume many subagents.</span></div>
+              <div class="item"><span class="cmd">AskUserQuestion</span><span>Ask structured questions.</span></div>
               <div class="item"><span class="cmd">Skill</span><span>Invoke a registered Skill.</span></div>
             </div>
           </div>
@@ -667,16 +703,19 @@
             <div class="group">
               <h3>Input</h3>
               <div class="item"><span><span class="key">Enter</span></span><span>Submit prompt</span></div>
-              <div class="item"><span><span class="key">Shift</span> <span class="key">Enter</span></span><span>New line</span></div>
+              <div class="item"><span><span class="key">Shift</span> <span class="key">Enter</span> / <span class="key">Ctrl</span> <span class="key">J</span></span><span>New line</span></div>
               <div class="item"><span><span class="key">Up</span> / <span class="key">Down</span></span><span>Input history</span></div>
               <div class="item"><span><span class="key">Ctrl</span> <span class="key">G</span></span><span>Edit in external editor</span></div>
               <div class="item"><span><span class="key">Ctrl</span> <span class="key">V</span></span><span>Paste image/video on macOS/Linux</span></div>
+              <div class="item"><span><span class="key">Alt</span> <span class="key">V</span></span><span>Paste image/video on Windows</span></div>
+              <div class="item"><span><span class="key">Ctrl</span> <span class="key">-</span></span><span>Undo input edit</span></div>
             </div>
             <div class="group">
               <h3>While Kimi is working</h3>
               <div class="item"><span><span class="key">Ctrl</span> <span class="key">S</span></span><span>Steer the running response</span></div>
               <div class="item"><span><span class="key">Esc</span></span><span>Stop, cancel, or close popup</span></div>
               <div class="item"><span><span class="key">Ctrl</span> <span class="key">C</span></span><span>Interrupt output or clear input</span></div>
+              <div class="item"><span><span class="key">Ctrl</span> <span class="key">D</span></span><span>Exit when input is empty</span></div>
               <div class="item"><span><span class="key">Ctrl</span> <span class="key">O</span></span><span>Expand/collapse tool output</span></div>
               <div class="item"><span><span class="key">Ctrl</span> <span class="key">E</span></span><span>Expand/collapse plan or preview</span></div>
             </div>
@@ -685,6 +724,8 @@
               <div class="item"><span><span class="key">1</span> - <span class="key">9</span></span><span>Pick option by number</span></div>
               <div class="item"><span><span class="key">Enter</span></span><span>Confirm selection</span></div>
               <div class="item"><span><span class="key">Esc</span></span><span>Reject request</span></div>
+              <div class="item"><span><span class="key">PageUp</span> / <span class="key">PageDown</span></span><span>Scroll help popup</span></div>
+              <div class="item"><span><span class="key">q</span> / <span class="key">Q</span></span><span>Close help popup</span></div>
             </div>
           </div>
         </article>
